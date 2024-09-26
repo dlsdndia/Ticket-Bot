@@ -42,8 +42,8 @@ class SiteManager {
             }
             terminal.flush()
 
-            // 키 입력을 대기
-            val input = reader.readLine("", "", null as? String?, null)
+            // 키 입력을 대기하고 처리
+            val input = reader.readLine("", null, '\u0000', null)
 
             // ANSI escape code로 방향키 처리
             when (input) {

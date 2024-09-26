@@ -1,6 +1,6 @@
-package hwang.macro.config
+package hwang.macro.manager
 
-class IntroConfig {
+class IntroManager {
 
     // ANSI 코드로 색상 설정
     private val RED = "\u001B[31m" // 빨간색
@@ -24,7 +24,7 @@ class IntroConfig {
 
     // LICENSE 파일에서 3줄만 출력하는 함수
     fun printLicenseSnippet() {
-        val licensePath = IntroConfig::class.java.getResource("/LICENSE.txt")?.readText()
+        val licensePath = IntroManager::class.java.getResource("/LICENSE.txt")?.readText()
         val licenseLines = licensePath?.lines()?.take(3) ?: listOf("LICENSE not found")
         val titleLine = "─".repeat(ticketBotArt.lines().first().length)
 
@@ -37,7 +37,7 @@ class IntroConfig {
 
     // README 파일에서 <!-- intro --> 섹션만 출력하는 함수
     fun printReadmeIntro() {
-        val readmePath = IntroConfig::class.java.getResource("/README.md")?.readText()
+        val readmePath = IntroManager::class.java.getResource("/README.md")?.readText()
         val introSection = extractSection(readmePath ?: "README not found", "intro")
         val titleLine = "─".repeat(ticketBotArt.lines().first().length)
 
