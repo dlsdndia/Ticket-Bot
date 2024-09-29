@@ -1,10 +1,5 @@
 package hwang.macro.manager
 
-import org.jline.reader.LineReader
-import org.jline.reader.LineReaderBuilder
-import org.jline.terminal.Terminal
-import org.jline.terminal.TerminalBuilder
-
 // 사이트와 관련된 모든 기능을 관리하는 클래스
 class SiteManager {
     private val sites = listOf(
@@ -16,48 +11,33 @@ class SiteManager {
     val interparkAddr = "https://tickets.interpark.com"
 
     // 사이트 선택 기능
-    fun selectSiteWithArrowKeys(): String {
-        // 터미널 생성
-        val terminal: Terminal = TerminalBuilder.builder()
-            .jna(true) // JNA를 통해 터미널의 고급 기능을 활성화
-            .system(true) // 기본 시스템 터미널 사용
-            .build()
+    fun selectSiteWithNumberInput(): String {
+        var selectedIndex: Int? = null
 
-        // LineReader 생성
-        val reader: LineReader = LineReaderBuilder.builder()
-            .terminal(terminal)
-            .build()
-
-        var selectedIndex = 0
-
-        while (true) {
-            // 현재 선택 상태를 표시
-            terminal.writer().print("\nUse Arrow Keys to select a site and press Enter:\n")
+        while (selectedIndex == null) {
+            // 사이트 목록 표시
+            println("사이트를 선택하세요:")
             for ((index, site) in sites.withIndex()) {
-                if (index == selectedIndex) {
-                    terminal.writer().print("> $site\n") // 선택된 항목에 표시
-                } else {
-                    terminal.writer().print("  $site\n")
-                }
+                println("${index + 1}. $site")
             }
-            terminal.flush()
+            print("번호를 입력하고 Enter를 누르세요: ")
 
-            // 키 입력을 대기하고 처리
-            val input = reader.readLine("", null, '\u0000', null)
+            // 사용자 입력을 처리
+            val input = readLine()
+            selectedIndex = try {
+                val number = input?.toInt() ?: -1
+                if (number in 1..sites.size) number - 1 else null
+            } catch (e: NumberFormatException) {
+                null
+            }
 
-            // ANSI escape code로 방향키 처리
-            when (input) {
-                "\u001B[A" -> { // Up Arrow Key (ANSI escape code)
-                    selectedIndex = (selectedIndex - 1 + sites.size) % sites.size
-                }
-                "\u001B[B" -> { // Down Arrow Key
-                    selectedIndex = (selectedIndex + 1) % sites.size
-                }
-                "" -> { // Enter Key (빈 입력)
-                    return sites[selectedIndex]
-                }
-                else -> terminal.writer().println("Unsupported input: $input")
+            if (selectedIndex == null) {
+                println("잘못된 입력입니다. 다시 시도하세요.")
             }
         }
+
+        return sites[selectedIndex]
     }
 }
+
+

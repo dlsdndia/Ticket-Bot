@@ -14,8 +14,6 @@ repositories {
 dependencies {
     implementation 'org.jetbrains.kotlin:kotlin-stdlib' // Kotlin 표준 라이브러리를 의존성으로 추가. Kotlin 코드가 실행되기 위해 필요한 필수 라이브러리입니다.
     implementation 'org.jline:jline:3.26.0' // JLine 라이브러리 의존성 추가 (터미널 입력 제어 및 UI 구현)
-    implementation 'org.jline:jline-terminal:3.26.0'
-    implementation 'org.jline:jline-reader:3.26.0' // 추가 의존성
     testImplementation 'org.jetbrains.kotlin:kotlin-test' // Kotlin 테스트 라이브러리 의존성 추가. 단위 테스트를 작성하고 실행하는 데 사용됩니다.
 }
 
